@@ -1,0 +1,18 @@
+<div class="landing_container">
+  <p>
+    Below are the individuals in your contact list
+  </p>
+  <div fxLayout="row"
+       class="table_container">
+    <div fxFlex="10">
+      im 10
+    </div>
+    <div fxFlex="60">
+      <mat-table #table [dataSource]="contactData">
+      </mat-table>
+    </div>
+    <div fxflex>
+      im empty
+    </div>
+  </div>
+</div>
