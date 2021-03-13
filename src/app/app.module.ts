@@ -7,7 +7,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableDataSource } from '@angular/material/table/table-data-source';
 
 import { GenerateNamesModule } from 'src/app/generateNames/generateNames.module';
 import { LandingModule } from 'src/app/landing/landing.module';
@@ -29,7 +28,6 @@ import { AppComponent } from './app.component';
     MatButtonModule,
     MatMenuModule,
     MatTableModule,
-    MatTableDataSource,
     GenerateNamesModule,
     LandingModule
   ],

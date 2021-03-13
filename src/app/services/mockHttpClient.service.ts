@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { randomInt } from 'crypto';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';
 import { Contact } from 'src/app/model/contact.model';
-import { adjectives, animals, colors, names, uniqueNamesGenerator } from 'unique-names-generator';
+import { adjectives, animals, colors, names, NumberDictionary, uniqueNamesGenerator } from 'unique-names-generator';
 
 
 @Injectable({
@@ -32,6 +31,7 @@ export class MockHttpClientService {
       const lastName = this.generateLastName();
       contacts.push(new Contact(firstName, lastName, this.generateAddress(),
         this.generatePhoneNumber(), this.generateEmail(firstName, lastName)));
+      i++;
     }
     return of(contacts);
   }
@@ -45,9 +45,10 @@ export class MockHttpClientService {
    */
   private generateFirstName(): string {
     const name = uniqueNamesGenerator({
-      dictionaries: [names]
+      dictionaries: [names],
+      style: 'capital'
     });
-    return name.charAt(0).toUpperCase().concat(name.slice(1));
+    return name;
   }
 
   /**
@@ -59,7 +60,8 @@ export class MockHttpClientService {
    */
   private generateLastName(): string {
     const name = uniqueNamesGenerator({
-      dictionaries: [adjectives, colors, animals]
+      dictionaries: [colors, animals],
+      separator: ''
     });
     return name.charAt(0).toUpperCase().concat(name.slice(1));
   }
@@ -72,7 +74,7 @@ export class MockHttpClientService {
    * @memberof MockHttpClientService
    */
   private generateAddress(): string {
-    const address = randomInt(500).toString();
+    const address = Math.floor(Math.random() * (900 - 100 + 1) + 100).toString();
     const street = uniqueNamesGenerator({ dictionaries: [colors] });
     const type = uniqueNamesGenerator({ dictionaries: [['Street', 'Drive', 'Ave', 'Plaze']] });
     return address.concat(' ').concat(street.charAt(0).toUpperCase()).concat(' ').concat(type);
@@ -86,9 +88,9 @@ export class MockHttpClientService {
    * @memberof MockHttpClientService
    */
   private generatePhoneNumber(): string {
-    const areaCode = uniqueNamesGenerator({ dictionaries: [names], length: 3 });
-    const centralOffice = uniqueNamesGenerator({ dictionaries: [names], length: 3 });
-    const lineNumber = uniqueNamesGenerator({ dictionaries: [names], length: 4 });
+    const areaCode = uniqueNamesGenerator({ dictionaries: [NumberDictionary.generate({ min: 100, max: 999 }) ]});
+    const centralOffice = uniqueNamesGenerator({ dictionaries: [NumberDictionary.generate({ min: 100, max: 999 }) ]});
+    const lineNumber = uniqueNamesGenerator({ dictionaries: [NumberDictionary.generate({ min: 1000, max: 9999 }) ]});
     return new Array(areaCode, centralOffice, lineNumber).join('-');
   }
 
