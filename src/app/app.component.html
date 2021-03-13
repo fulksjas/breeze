@@ -1,13 +1,6 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button [matMenuTriggerFor]="menuNav"> <mat-icon>menu</mat-icon></button>
-  <mat-menu #menuNav="matMenu">
-    <button mat-menu-item [routerLink]="'/landing'">Landing Page</button>
-    <button mat-menu-item [routerLink]="'/generateNames'">Generate Names</button>
-  </mat-menu>
   <span>Breeze Contact List</span>
 </mat-toolbar>
-
-
 
 
 <router-outlet></router-outlet>

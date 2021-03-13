@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
+import { of } from 'rxjs';
 
 import { Observable } from 'rxjs/internal/Observable';
-import { of } from 'rxjs/internal/observable/of';
 import { Contact } from 'src/app/model/contact.model';
-import { adjectives, animals, colors, names, NumberDictionary, uniqueNamesGenerator } from 'unique-names-generator';
+import { animals, colors, names, NumberDictionary, uniqueNamesGenerator } from 'unique-names-generator';
 
 
 @Injectable({
@@ -33,7 +34,8 @@ export class MockHttpClientService {
         this.generatePhoneNumber(), this.generateEmail(firstName, lastName)));
       i++;
     }
-    return of(contacts);
+    // mimic the API soring the data for us before we get it
+    return of(_.sortBy(contacts, ['firstName', 'lastName']));
   }
 
   /**

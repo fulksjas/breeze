@@ -8,7 +8,7 @@ export class Contact {
   email: string;
   phone: string;
 
-  constructor(firstName: string, lastName: string, address: string, email: string, phone: string) {
+  constructor(firstName: string, lastName: string, address: string, phone: string, email: string) {
     this.contactId = uniqueId('_br');
     this.firstName = firstName;
     this.lastName = lastName;
@@ -18,7 +18,7 @@ export class Contact {
   }
 
   getFullName(): string {
-    return this.firstName.concat(', ').concat(this.lastName);
+    return this.firstName.concat(' ').concat(this.lastName);
   }
 
 }

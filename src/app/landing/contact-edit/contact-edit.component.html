@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>{{ contactName ? 'Edit' : 'Add' }} Contact {{contactName}}</h2>
+<mat-dialog-content>
+  <form [formGroup]="contactForm">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input formControlName="firstName"
+               matInput>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input formControlName="lastName"
+               matInput>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <input formControlName="address"
+               matInput>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input formControlName="phone"
+               matInput>
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="phone--length">
+        <mat-label>Email</mat-label>
+        <input formControlName="email"  [email]="true"
+               matInput>
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-button
+          mat-raised-button
+          color="accent"
+          matDialogClose>Cancel</button>
+  <button mat-button
+          [disabled]="contactForm.invalid"
+          mat-raised-button
+          color="primary"
+          [matDialogClose]="contactForm.value"
+          cdkFocusInitial>Save</button>
+</mat-dialog-actions>

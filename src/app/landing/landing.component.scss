@@ -1,14 +1,46 @@
+
+@import '~@angular/material/theming';
+//We import our custom scss component here
+@include mat-core();
+
 .landing {
   &_container {
     padding-top: 20px;
     padding-left: 15px;
 
+    .left-panel {
+      max-width: 200px;
+
+      .add_button {
+        padding-bottom: 20px;
+      }
+    }
+
+    h2 {
+      align-items: center;
+    }
+
     .table {
       &_container {
         div {
-          border: 2px solid #abc3eb;
+          
         }
-    
+
+        .edit_icon {
+          vertical-align: top;
+        }
+
+        .mat-column-email {
+          flex: 0 0 300px !important;
+          width: 300px !important;
+        }
+        .mat-column-edits {
+            display: flex;
+            justify-content: flex-end;
+            flex: 0 0 70px !important;
+            width: 70px !important;
+            padding-right: 15px !important;
+        }
       }
     }
   }

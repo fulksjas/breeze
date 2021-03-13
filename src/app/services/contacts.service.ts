@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
 import { Contact } from 'src/app/model/contact.model';
 import { MockHttpClientService } from 'src/app/services/mockHttpClient.service';
@@ -11,8 +12,13 @@ export class ContactsService {
 
   private static Contacts: Contact[];
   private contactsSource = new Subject<Contact[]>();
-
-  getContactsSource(): Observable<Contact[]> {
+/**
+ * provides a broadcast and access to when contact are modified
+ *
+ * @returns {Observable<Contact[]>}
+ * @memberof ContactsService
+ */
+getContactsSource(): Observable<Contact[]> {
     return this.contactsSource.asObservable();
   }
 
@@ -36,7 +42,7 @@ export class ContactsService {
   }
 
   /**
-   * update individual contact
+   * update individual contact in static list and notify listeners of changes
    *
    * @param {Contact} contact
    * @memberof ContactsService
@@ -44,7 +50,7 @@ export class ContactsService {
   saveContact(contact: Contact): void {
     // normally we would do use a http service to handle the PUT or POST based on the object state
     const index = ContactsService.Contacts.findIndex((cntct: Contact) => cntct.contactId === contact.contactId);
-    if (index) {
+    if (index > -1) {
       // PUT
       ContactsService.Contacts[index] = contact;
     } else {
@@ -52,6 +58,20 @@ export class ContactsService {
       ContactsService.Contacts.push(contact);
     }
     // dont feel comfortable with this, but for this assignment...
+    this.contactsSource.next(_.sortBy(ContactsService.Contacts, ['firstName', 'lastName']));
+  }
+/**
+ * remove the contact from the static list and notify listenrs of chagnes
+ *
+ * @param {Contact} contact
+ * @memberof ContactsService
+ */
+deleteContact(contact: Contact): void {
+    // normally we would do use a http service to handle the PUT or POST based on the object state
+    const index = ContactsService.Contacts.findIndex((cntct: Contact) => cntct.contactId === contact.contactId);
+    ContactsService.Contacts.splice(
+      index,
+      1);
     this.contactsSource.next(ContactsService.Contacts);
   }
 }

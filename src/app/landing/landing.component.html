@@ -1,22 +1,45 @@
 <div class="landing_container">
-  <p>
-    Below are the individuals in your contact list
-  </p>
   <div fxLayout="row"
        class="table_container">
-    <div fxFlex>
-      im 10
+    <div fxFlex
+         class="left-panel">
+      <div class="add_button">
+        <button mat-button (click)="openEditDialog({})"
+                mat-raised-button
+                color="accent">
+          <mat-icon>add</mat-icon> Add New Contact
+        </button>
+      </div>
+      <h3>Columns You Can Sort On:</h3>
+      <ul>
+        <li>First Name</li>
+        <li>Last Name</li>
+        <li>Email</li>
+      </ul>
+      <h3>
+        To edit contacts,<br>
+        click the <mat-icon class="edit_icon">list</mat-icon> icon
+      </h3>
     </div>
+
     <div fxFlex="80">
+
+      <h2 align="center">
+        Breeze Airways Contacts
+      </h2>
       <mat-table #table
-                 [dataSource]="contactData" matSort matPaginator>
+                 [dataSource]="contactData"
+                 matSort
+                 matSortActive="firstName"
+                 matPaginator>
         <ng-container matColumnDef="firstName">
           <mat-header-cell *matHeaderCellDef
                            mat-sort-header> First Name </mat-header-cell>
           <mat-cell *matCellDef="let contact"> {{contact.firstName}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="lastName">
-          <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header> Last Name </mat-header-cell>
           <mat-cell *matCellDef="let contact"> {{contact.lastName}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="address">
@@ -24,21 +47,43 @@
           <mat-cell *matCellDef="let contact"> {{contact.address}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="email">
-          <mat-header-cell *matHeaderCellDef> E-Mail </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header> E-Mail </mat-header-cell>
           <mat-cell *matCellDef="let contact"> {{contact.email}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="phone">
           <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
           <mat-cell *matCellDef="let contact"> {{contact.phone}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="edits">
+          <mat-header-cell *matHeaderCellDef
+                           class="table_cell--right"> Edits </mat-header-cell>
+          <mat-cell *matCellDef="let contact"> <button mat-icon-button
+                    align="right"
+                    [matMenuTriggerFor]="menuNav">
+              <mat-icon>list</mat-icon>
+            </button>
+            <mat-menu #menuNav="matMenu">
+              <button mat-menu-item
+                      (click)="openEditDialog(contact)">
+                <mat-icon>edit</mat-icon>Edit
+              </button>
+              <button mat-menu-item
+                      (click)="openDeleteDialog(contact)">
+                <mat-icon>delete_forever</mat-icon>Delete
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
 
         <mat-header-row *matHeaderRowDef="contactColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: contactColumns;"></mat-row>
 
       </mat-table>
       <mat-paginator [pageSize]="10"
-      [pageSizeOptions]="[10, 25, 50]">
-</mat-paginator>
+                     [pageSizeOptions]="[10, 25, 50]">
+      </mat-paginator>
     </div>
   </div>
 </div>
